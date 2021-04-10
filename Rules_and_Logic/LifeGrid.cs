@@ -31,13 +31,15 @@ namespace Rules_Logic
 
         public void UpdateState()
         {
-            for (int i = 0; i < gridHeight; i++)
-                for (int j = 0; j < gridWidth; j++)
-                {
-                    var liveNeighbors = GetLiveNeighbors(i, j);
-                    nextState[i, j] =
-                        LifeRules.GetNewState(CurrentState[i, j], liveNeighbors);
-                }
+            Parallel.For(0, gridHeight, i =>
+           {
+               for (int j = 0; j < gridWidth; j++)
+               {
+                   var liveNeighbors = GetLiveNeighbors(i, j);
+                   nextState[i, j] =
+                       LifeRules.GetNewState(CurrentState[i, j], liveNeighbors);
+               }
+           });
 
             CurrentState = nextState;
             nextState = new CellState[gridHeight, gridWidth];

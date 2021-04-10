@@ -12,7 +12,7 @@ namespace Conway
     {
         static void Main(string[] args)
         {
-            var grid = new LifeGrid(25, 65);
+            var grid = new LifeGrid(25, 25);
             grid.Randomize();
 
             ShowGrid(grid.CurrentState);
@@ -28,10 +28,10 @@ namespace Conway
         {
             Console.Clear();
             int x = 0;
-            int rowLength = currentState.GetUpperBound(1) + 1;
+            int rowLength = currentState.GetUpperBound(1) + 1;  // fara +1 ia height-ul, cu +1 verifica width, ce ne trebuie
 
-            var output = new StringBuilder();
-
+            var output = new StringBuilder();   // Instead of directly writing to the console, we add the characters to the StringBuilder. Then at the very end, we call Console.Write one time.
+                                                // String is immutable, stringBuilder can be modified
             foreach (var state in currentState)
             {
                 output.Append(state == CellState.Alive ? "O" : "·");
