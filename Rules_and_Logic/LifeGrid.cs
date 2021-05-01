@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Rules_Logic
 {
@@ -31,6 +32,7 @@ namespace Rules_Logic
 
         public void UpdateState()
         {
+<<<<<<< Updated upstream
             for (int i = 0; i < gridHeight; i++)
                 for (int j = 0; j < gridWidth; j++)
                 {
@@ -39,9 +41,25 @@ namespace Rules_Logic
                         LifeRules.GetNewState(CurrentState[i, j], liveNeighbors);
                 }
 
+=======
+            var source = Enumerable.Range(0, gridHeight);
+            var list = source.ToList();
+           
+            list.AsParallel().ForAll(i =>
+       {
+           for (int j = 0; j < gridWidth; j++)
+           {
+               var liveNeighbors = GetLiveNeighbors(i, j);
+               nextState[i, j] =
+                   LifeRules.GetNewState(CurrentState[i, j], liveNeighbors);
+           }
+       });
+               
+>>>>>>> Stashed changes
             CurrentState = nextState;
             nextState = new CellState[gridHeight, gridWidth];
         }
+
 
         public void Randomize()
         {
