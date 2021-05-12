@@ -15,11 +15,13 @@ namespace Rules_Logic
         public CellState[,] CurrentState;
         private CellState[,] nextState;
 
+        List<int> source;
+
         public LifeGrid(int height, int width)
         {
             gridHeight = height;
             gridWidth = width;
-
+            source = Enumerable.Range(0, gridHeight).ToList();
             CurrentState = new CellState[gridHeight, gridWidth];
             nextState = new CellState[gridHeight, gridWidth];
 
@@ -31,11 +33,8 @@ namespace Rules_Logic
         }
 
         public void UpdateState()
-        {
-            var source = Enumerable.Range(0, gridHeight);
-            var list = source.ToList();
-           
-            list.AsParallel().ForAll(i =>
+        {      
+            source.AsParallel().ForAll(i =>
        {
            for (int j = 0; j < gridWidth; j++)
            {
