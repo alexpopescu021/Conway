@@ -15,7 +15,7 @@ namespace Conway.PerformanceTest
         {
             var grid = new LifeGrid(75, 25);
 
-            int iterations = 10000;
+            int iterations = 1000;
 
             Console.WriteLine("Number of iterations: {0}", iterations);
 
