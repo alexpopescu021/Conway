@@ -13,20 +13,80 @@ namespace Conway.PerformanceTest
     {
         static void Main(string[] args)
         {
-            var grid = new LifeGrid(75, 25);
+            string[] Files = System.IO.Directory.GetFiles("Inputs");
+            var iterations = 50000;
+            int no_inputs = 10;
+            int iterator = 1;
+            Stopwatch stopwatch;
+            Console.WriteLine("Iterations: {0}", iterations);
+            foreach (string sFile in Files)
+            {
+                if (iterator != no_inputs)
+                {
 
-            int iterations = 1000;
 
-            Console.WriteLine("Number of iterations: {0}", iterations);
+                    string fileCont = System.IO.File.ReadAllText(sFile);
 
-            grid.Randomize();
-            var stopwatch = Stopwatch.StartNew();
+                    var size = Math.Sqrt(fileCont.Length);
+                    Console.WriteLine(size);
+                    var grid = new LifeGrid((int)size, (int)size);
+                    Console.WriteLine("Grid size: {0} x {0}", (int)size, (int)size);
+                    for (int i = 0; i < size; i++)
+                        for (int j = 0; j < size; j++)
+                        {
+                            char bits = fileCont[i + j];
+                            if (bits.Equals('0'))
+                            {
+                                grid.CurrentState[i, j] = CellState.Dead;
+                            }
+                            else
+                            {
+                                grid.CurrentState[i, j] = CellState.Alive;
+                            }
+
+
+                        }
+
+                    stopwatch = Stopwatch.StartNew();
+
+                    for (int i = 0; i < iterations; i++)
+                    {
+                        grid.UpdateState();
+                    }
+                    Console.WriteLine("Nested for: {0}ms", stopwatch.ElapsedMilliseconds);
+                    stopwatch.Stop();
+                    iterator++;
+                }
+                else
+                {
+                    Console.ReadLine();
+                    Environment.Exit(0);
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             for (int i = 0; i < iterations; i++)
-                grid.UpdateState();
-            Console.WriteLine("Nested for: {0}ms", stopwatch.ElapsedMilliseconds);
+                //grid.UpdateState();
 
-            
-            Console.ReadLine();
+
+
+
+
+
+                Console.ReadLine();
         }
     }
 }
